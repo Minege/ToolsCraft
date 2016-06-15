@@ -71,8 +71,11 @@ class ProfileWindow(Gtk.Window):
         Gtk.main_quit()
 
     def delete_profile(self, button):
-        # To implement ! (Open the mod window !)
-        pass
+        active = profile_list_gui.get_active()
+        profile_list_l.pop(active)
+        profile_list_gui.remove(active)
+        profile_list_gui.set_active(0)
+        dataRead.write_profile(profile_list_l)
 
 
 class CreationWindow(Gtk.Window):
@@ -105,13 +108,10 @@ class CreationWindow(Gtk.Window):
         self.show_all()
 
     def add_profile(self, button):
-        print("salut")
         for profile in profile_list_l:
             if(self.name.get_text() in profile):
-                print("DONT ADD")
                 Gtk.main_quit()
                 quit()
-        print("Adding")
         profile_list_l.append([self.name.get_text(),
         self.versions_list.get_active_text()])
 
@@ -125,6 +125,5 @@ class CreationWindow(Gtk.Window):
         dataRead.write_profile(profile_list_l)
 
     def cancel(self, button):
-        ProfileWindow()
-        Gtk.main()
         Gtk.main_quit()
+        quit()
